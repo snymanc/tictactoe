@@ -1,3 +1,4 @@
+import time
 from player import HumanPlayer, RandomComputerPlayer
 
 
@@ -97,6 +98,9 @@ def play(game, x_player, o_player, print_game=True):
 
         # alternate players
         letter = 'O' if letter == 'X' else 'X'
+
+        # tiny delay before next move
+        time.sleep(0.8)
 
     if print_game:
         print('It\'s a tie')
