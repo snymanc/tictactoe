@@ -1,5 +1,5 @@
 import time
-from player import HumanPlayer, RandomComputerPlayer
+from player import HumanPlayer, RandomComputerPlayer, AIComputerPlayer
 
 
 class TicTacToe:
@@ -100,14 +100,47 @@ def play(game, x_player, o_player, print_game=True):
         letter = 'O' if letter == 'X' else 'X'
 
         # tiny delay before next move
-        time.sleep(0.8)
+        if print_game:
+            time.sleep(0.8)
 
     if print_game:
         print('It\'s a tie')
 
 
-if __name__ == '__main__':
+def human_play():
     x_player = HumanPlayer('X')
-    o_player = RandomComputerPlayer('O')
+    o_player = AIComputerPlayer('O')
     t = TicTacToe()
     play(t, x_player, o_player, print_game=True)
+
+
+def computers_play(num_games):
+    x_wins = 0
+    o_wins = 0
+    ties = 0
+    for _ in range(num_games):
+        x_player = RandomComputerPlayer('X')
+        o_player = AIComputerPlayer('O')
+        t = TicTacToe()
+        result = play(t, x_player, o_player, print_game=False)
+
+        if result == 'X':
+            x_wins += 1
+        elif result == 'O':
+            o_wins += 1
+        else:
+            ties += 1
+
+    print(
+        f'After {num_games} simulation\'s, {x_wins} X wins, {o_wins} O wins and {ties} ties')
+
+
+if __name__ == '__main__':
+    game_type = int(input('Game play options:\n\t1 You vs AI\n\t2 AI simulation\n'))
+    if game_type == 1:
+        human_play()
+    elif game_type == 2:
+        num_games = int(input('Number of games?\n'))
+        computers_play(num_games)
+    else:
+        f'Invalid option {game_type}'
